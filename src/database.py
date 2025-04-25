@@ -1,4 +1,5 @@
-import sqlite3
+# src/database.py
+from modules import sqlite3
 
 class Database:
     def __init__(self, db_path):
@@ -30,3 +31,4 @@ class Database:
 
     def close_connection(self):
         self.conn.close()
+        

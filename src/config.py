@@ -1,5 +1,5 @@
-from dotenv import load_dotenv
-import os
+# src/config.py
+from modules import load_dotenv, os
 
 load_dotenv()
 
