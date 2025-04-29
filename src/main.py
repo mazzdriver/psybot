@@ -1,16 +1,21 @@
-# src/main.py
-from modules import *
-from config import *
-from handlers import register_handlers
+from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.memory import MemoryStorage
+from config import TELEGRAM_BOT_TOKEN
+from handlers import router
+from database import Database
 
-bot = Bot(token=TELEGRAM_BOT_TOKEN)
-dp = Dispatcher()  # Больше не передается bot
-
-register_handlers(dp)
-
-# Правильная асинхронная обработка
 async def main():
-    await dp.start_polling(bot)  # Передаем bot в start_polling
+    # Инициализация БД
+    with Database() as db:
+        db.init_db()
+    
+    # Настройка бота
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    dp = Dispatcher(storage=MemoryStorage())
+    dp.include_router(router)
+    
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    asyncio.run(main())  # Запуск главного асинхронного потока
+    import asyncio
+    asyncio.run(main())
