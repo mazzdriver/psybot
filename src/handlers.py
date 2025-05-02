@@ -57,7 +57,7 @@ async def process_time(message: Message, state: FSMContext):
         reply_markup=ReplyKeyboardRemove()
     )
 
-@router.message(BookingState.fullname))
+@router.message(BookingState.fullname)
 async def process_name(message: Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     
